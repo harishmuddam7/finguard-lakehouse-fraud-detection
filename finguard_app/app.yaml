@@ -1,0 +1,9 @@
+command:
+  - "streamlit"
+  - "run"
+  - "app.py"
+
+resources:
+  - name: "sql-warehouse"
+    sql_warehouse:
+      id: "bfb49e1999ae8f09"
