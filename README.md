@@ -30,8 +30,10 @@ The primary design goal of FinGuard is operational realism: raw card transaction
   * Writes verdicts to Delta Lake with Change Data Feed (CDF) enabled to maintain an immutable audit trail.
 
 ## Repository Structure
+
+```text
 finguard-lakehouse-fraud-detection/
-├── assets/                          # Architecture diagrams and application screenshots
+├── assets/
 │   ├── app_analyst_triage.png
 │   ├── app_analytics_overview.png
 │   ├── app_origin_cities.png
@@ -39,47 +41,64 @@ finguard-lakehouse-fraud-detection/
 │   ├── lakehouse_bi_dashboard.png
 │   ├── pipeline_dag_orchestration.png
 │   └── pipeline_timeline_execution.png
-├── notebooks/                       # Databricks PySpark pipelines and ML workflows
+├── notebooks/
 │   ├── 01_env_and_reference_data.ipynb
 │   ├── 02_model_baseline_training.ipynb
 │   ├── 03_bronze_silver_pipeline.ipynb
 │   └── 04_ai_scoring_and_triage.ipynb
-├── streamlit/                       # Analyst triage application
+├── streamlit/
 │   └── app.py
-├── .streamlit/                      # Configuration templates (credentials ignored)
+├── .streamlit/
 │   └── secrets.toml.example
-├── .gitignore                       # Prevents committing secrets or temp files
-├── requirements.txt                 # Application runtime dependencies
+├── .gitignore
+├── requirements.txt
 └── README.md
+```
+
+---
 
 ## Local Setup & Deployment
+
 ### Prerequisites
 * Python 3.10 or higher installed locally
-* Access to a Databricks Workspace with an active SQL Warehouse or interactive cluster
-* Unity Catalog enabled with read/write access on the target catalog and schema
+* Access to a Databricks Workspace with an active SQL Warehouse or cluster
+* Unity Catalog enabled with read/write access on target schema
 
 ### 1. Clone the Project
-bash
-git clone [https://github.com/harishmuddam7/finguard-lakehouse-fraud-detection.git](https://github.com/harishmuddam7/finguard-lakehouse-fraud-detection.git)
+```bash
+git clone https://github.com/harishmuddam7/finguard-lakehouse-fraud-detection.git
 cd finguard-lakehouse-fraud-detection
+```
 
-2. Configure Local Secrets
+### 2. Configure Local Secrets
 Create your private configuration file from the template:
+```bash
 cp .streamlit/secrets.toml.example .streamlit/secrets.toml
+```
 
-Open .streamlit/secrets.toml and supply your connection details:
+Open `.streamlit/secrets.toml` and supply your connection details:
+```toml
 DATABRICKS_SERVER_HOSTNAME = "your-workspace-url.cloud.databricks.com"
 DATABRICKS_HTTP_PATH = "/sql/1.0/warehouses/xxxxxxxxxxxx"
 DATABRICKS_TOKEN = "dapi_your_personal_access_token"
-Security Note: .streamlit/secrets.toml is ignored by git. Never commit live tokens or credentials.
+```
 
-3. Install Dependencies
+> **Security Note:** `.streamlit/secrets.toml` is ignored by git. Never commit live tokens or credentials.
+
+### 3. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-4. Run the Streamlit Triage Console
+### 4. Run the Streamlit Triage Console
+```bash
 streamlit run streamlit/app.py
+```
 
-**Security & Governance Standards**:-
-Unity Catalog Governance: All tabular data resides in managed or external Delta tables governed by Unity Catalog access policies.
-Separation of Concerns: Cloud execution logic runs within Databricks compute resources; presentation and triage logic run independently via the client application using parameterized queries.
-Immutable Change Audits: Disposition entries append directly to Delta tables tracked by Change Data Feed (CDF), providing an auditable trail for financial compliance reviews.
+---
+
+## Security & Governance Standards
+
+* **Unity Catalog Governance:** All tabular data resides in managed or external Delta tables governed by Unity Catalog access policies.
+* **Separation of Concerns:** Cloud execution logic runs within Databricks compute resources; presentation and triage logic run independently via the client application using parameterized queries.
+* **Immutable Change Audits:** Disposition entries append directly to Delta tables tracked by Change Data Feed (CDF), providing an auditable trail for financial compliance reviews.
