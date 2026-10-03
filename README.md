@@ -6,7 +6,8 @@ The primary design goal of FinGuard is operational realism: raw card transaction
 
 ## High-Level Architecture
 
-<img width="3430" height="1216" alt="architecture_diagram" src="https://github.com/user-attachments/assets/ee6d99cb-a107-45c6-8ede-799703b9a42b" />
+<img width="3430" height="1216" alt="architecture_diagram" src="https://github.com/user-attachments/assets/<img width="1700" height="820" alt="architecture_diagram (3)" src="https://github.com/user-attachments/assets/d0ee75bf-7676-4a8f-b6c0-14960a5a111b" />
+" />
 
 ### Medallion Workflow
 
